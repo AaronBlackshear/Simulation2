@@ -1,0 +1,1 @@
+SELECT * FROM houses WHERE address LIKE $1;

@@ -2,16 +2,25 @@ import React, { Component } from 'react';
 
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux'
-import { enterName, enterAddress, enterCity, enterState, enterZipcode } from '../../redux/reducer';
+import { enterName, enterAddress, enterCity, enterState, enterZipcode,addHouse } from '../../redux/reducer';
 
 class Wizard extends Component{
+    constructor(){
+        super()
+        this.addProperty = this.addProperty.bind(this);
+    }
 
     componentDidMount() {
-        this.props.enterName()
+        this.addProperty();
+    }
+
+    addProperty(){
+        this.props.enterName();
     }
 
     render(){
-        const { enterName, enterAddress, enterCity, enterState, enterZipcode } = this.props;
+        const { enterName, enterAddress, enterCity, enterState, enterZipcode, wizardAddress, wizardCity, wizardName, wizardState, wizardZipcode  } = this.props;
+        // console.log(this.props)
         return (
             <div>
                 Wizard
@@ -26,6 +35,7 @@ class Wizard extends Component{
                 <input onChange={e => enterState(e.target.value)} />
                 <h3>Zipcode</h3>
                 <input onChange={e => enterZipcode(e.target.value)} />
+                <button onClick={() => {addHouse(wizardName,wizardAddress,wizardCity,wizardState,wizardZipcode), this.addProperty()}} ><Link to='/'>Complete</Link></button>
             </div>
         )
     }
@@ -33,4 +43,4 @@ class Wizard extends Component{
 
 const mapStateToProps = state => state;
 
-export default connect(mapStateToProps, { enterName, enterAddress, enterCity, enterState, enterZipcode })(Wizard);
+export default connect(mapStateToProps, { enterName, enterAddress, enterCity, enterState, enterZipcode, addHouse })(Wizard);
